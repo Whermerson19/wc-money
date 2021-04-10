@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface IRadioBoxProps {
+  isActive: boolean;
+}
+
 export const Container = styled.form`
   h2 {
     color: var(--text-title);
@@ -54,33 +58,33 @@ export const TransactionTypeContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
+`;
 
-  button {
-    height: 4rem;
-    border: 1px solid #d7d7d7;
-    border-radius: 0.25rem;
+export const RadioBox = styled.button<IRadioBoxProps>`
+  height: 4rem;
+  border: 1px solid #d7d7d7;
+  border-radius: 0.25rem;
 
-    background: transparent;
+  background: ${(props) => (props.isActive ? "#ccc" : "transparent")};
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    :hover {
-      border-color: #aaa;
-    }
+  :hover {
+    border-color: #aaa;
+  }
 
-    img {
-      width: 20px;
-      height: 20px;
-    }
+  img {
+    width: 20px;
+    height: 20px;
+  }
 
-    span {
-      display: inline-block;
+  span {
+    display: inline-block;
 
-      margin-left: 1rem;
-      font-size: 1rem;
-      color: var(--text-title);
-    }
+    margin-left: 1rem;
+    font-size: 1rem;
+    color: var(--text-title);
   }
 `;
