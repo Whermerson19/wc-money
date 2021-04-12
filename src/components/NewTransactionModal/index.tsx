@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
+import api from "../../services/api";
 
 import { Container, TransactionTypeContainer, RadioBox } from "./styles";
 
@@ -23,15 +24,17 @@ export default function NewTransactionModal({
   const [category, setCategory] = useState("");
   const [value, setValue] = useState(0);
 
-  const handleCreateNewTransaction = useCallback((event: React.FormEvent) => {
+  const handleCreateNewTransaction = useCallback(async(event: React.FormEvent) => {
     event.preventDefault();
 
-    console.log({
+    const data = {
       title,
       category,
       value,
       type,
-    });
+    }
+
+    await api.post('/transactions', data);
   }, [title, category, value, type]);
 
   return (
