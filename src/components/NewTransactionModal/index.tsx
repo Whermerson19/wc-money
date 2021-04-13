@@ -24,7 +24,7 @@ export default function NewTransactionModal({
   const [category, setCategory] = useState("");
   const [value, setValue] = useState(0);
 
-  const handleCreateNewTransaction = useCallback(async(event: React.FormEvent) => {
+  const handleCreateNewTransaction = useCallback((event: React.FormEvent) => {
     event.preventDefault();
 
     const data = {
@@ -34,7 +34,7 @@ export default function NewTransactionModal({
       type,
     }
 
-    await api.post('/transactions', data);
+    api.post('/transactions', data);
   }, [title, category, value, type]);
 
   return (
