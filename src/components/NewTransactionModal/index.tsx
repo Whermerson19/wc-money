@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Modal from "react-modal";
 
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
-import api from "../../services/api";
+import { TransactionsContext } from "../../TransactionsContext";
 
 import { Container, TransactionTypeContainer, RadioBox } from "./styles";
 
@@ -19,23 +19,33 @@ export default function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: IModalProps) {
+  const { createTransaction } = useContext(TransactionsContext);
+
   const [type, setType] = useState("deposit");
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [value, setValue] = useState(0);
 
-  const handleCreateNewTransaction = useCallback((event: React.FormEvent) => {
-    event.preventDefault();
+  const handleCreateNewTransaction = useCallback(
+    async(event: React.FormEvent) => {
+      event.preventDefault();
 
-    const data = {
-      title,
-      category,
-      value,
-      type,
-    }
+      await createTransaction({
+        title,
+        category,
+        amount: value,
+        type,
+      });
 
-    api.post('/transactions', data);
-  }, [title, category, value, type]);
+      setTitle('')
+      setCategory('')
+      setType('deposit')
+      setValue(0);
+      
+      onRequestClose();
+    },
+    [title, category, value, type, createTransaction, onRequestClose]
+  );
 
   return (
     <Modal
